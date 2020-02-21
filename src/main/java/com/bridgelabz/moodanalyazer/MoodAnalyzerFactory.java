@@ -17,6 +17,28 @@ public class MoodAnalyzerFactory {
             throw new MoodAnalyzerException(MoodAnalyzerException.MoodException.ENTERED_NULL,"Invalid Message");
         }
     }
+    public static MoodAnalyzer createMoodAnalyzer(String message) {
+
+        try {
+            Constructor<?> moodConstructor = Class.forName("com.bridgelabz.moodanalyazer.MoodAnalyzer").getConstructor(String.class);
+            Object moodObject = moodConstructor.newInstance(message);
+            MoodAnalyzer moodAnalyzerObject = (MoodAnalyzer) moodObject;
+            return moodAnalyzerObject;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public static Constructor getConstructor(String stringClass, Class stringMethod) throws MoodAnalyzerException {
         try {

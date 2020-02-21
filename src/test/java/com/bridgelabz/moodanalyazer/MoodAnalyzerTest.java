@@ -82,6 +82,12 @@ public class MoodAnalyzerTest {
     }
 
     @Test
+    public void givenMoodAnalyzerClass_WhenProper_ShouldReturnObject() throws MoodAnalyzerException {
+        MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
+        Assert.assertEquals(new MoodAnalyzer("I Am In Happy Mood"), moodAnalyzer);
+    }
+
+    @Test
     public void givenMoodAnalyzerClassName_WhenImProper_ShouldeReturn() {
         try {
             MoodAnalyzerFactory.getConstructor("com.bridgelabz.moodanalyazer.MoodAnalyzerrrr",String.class);
