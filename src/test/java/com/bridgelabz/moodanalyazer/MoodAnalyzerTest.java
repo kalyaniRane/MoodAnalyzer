@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyzerTest {
 
@@ -102,6 +101,29 @@ public class MoodAnalyzerTest {
         try {
             MoodAnalyzerFactory.getConstructor("com.bridgelabz.moodanalyazer.MoodAnalyzer",Integer.class);
         }catch (MoodAnalyzerException e)
+        {
+            Assert.assertEquals(MoodAnalyzerException.MoodException.NO_SUCH_METHOD,e.type);
+        }
+    }
+
+    @Test
+    public void givenMethod_WhenProper_ShouldReturnHappy() {
+        try{
+            MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I AM In Happy Mood");
+            String analyzeMood = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyzeMood");
+            Assert.assertEquals("HAPPY",analyzeMood);
+        }catch(MoodAnalyzerException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMethod_WhenImProper_ShouldReturnException() {
+        try {
+            MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
+            String analyzeMooddd = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyzeMooddd");
+        }catch(MoodAnalyzerException e)
         {
             Assert.assertEquals(MoodAnalyzerException.MoodException.NO_SUCH_METHOD,e.type);
         }

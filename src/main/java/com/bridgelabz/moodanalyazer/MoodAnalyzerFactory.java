@@ -5,6 +5,7 @@ import com.bridgelabz.moodAnalyazerException.MoodAnalyzerException.MoodException
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyzerFactory {
     public static MoodAnalyzer createMoodAnalyzer() throws MoodAnalyzerException {
@@ -35,7 +36,6 @@ public class MoodAnalyzerFactory {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -49,5 +49,20 @@ public class MoodAnalyzerFactory {
         } catch (NoSuchMethodException e) {
             throw new MoodAnalyzerException(MoodException.NO_SUCH_METHOD,"Method Not Found");
         }
+    }
+
+    public static String getMethod(MoodAnalyzer obj,String methodName) {
+        try {
+            Method declaredMethod = obj.getClass().getDeclaredMethod(methodName);
+            return (String) declaredMethod.invoke(obj);
+
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalyzerException(MoodException.NO_SUCH_METHOD,"Method Not Found");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
