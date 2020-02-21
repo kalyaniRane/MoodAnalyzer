@@ -36,7 +36,7 @@ public class MoodAnalyzerTest {
         String mood = null;
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer();
         try {
-            mood = moodAnalyzer.analyseMood();
+            mood = moodAnalyzer.analyseMood(null);
         } catch (MoodAnalyzerException e) {
             Assert.assertEquals(MoodAnalyzerException.MoodException.ENTERED_NULL, e.type);
         }
@@ -110,7 +110,7 @@ public class MoodAnalyzerTest {
     public void givenMethod_WhenProper_ShouldReturnHappy() {
         try{
             MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I AM In Happy Mood");
-            String analyzeMood = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyzeMood");
+            String analyzeMood = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyseMood");
             Assert.assertEquals("HAPPY",analyzeMood);
         }catch(MoodAnalyzerException e)
         {
@@ -122,10 +122,44 @@ public class MoodAnalyzerTest {
     public void givenMethod_WhenImProper_ShouldReturnException() {
         try {
             MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
-            String analyzeMooddd = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyzeMooddd");
+            String analyzeMood = MoodAnalyzerFactory.getMethod(moodAnalyzer, "analyzeMood");
         }catch(MoodAnalyzerException e)
         {
             Assert.assertEquals(MoodAnalyzerException.MoodException.NO_SUCH_METHOD,e.type);
+        }
+    }
+
+    @Test
+    public void givenField_WhenProper_ShouldReturnHappy() {
+        try{
+            MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
+            String message1 = MoodAnalyzerFactory.getField(moodAnalyzer,"message","I Am In Happy Mood");
+            Assert.assertEquals("HAPPY",message1);
+        }catch(MoodAnalyzerException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenField_WhenImProper_ShouldReturnHappy() {
+        try{
+            MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
+            String message1 = MoodAnalyzerFactory.getField(moodAnalyzer,"Message","I Am In Happy Mood");
+        }catch(MoodAnalyzerException e)
+        {
+            Assert.assertEquals(MoodAnalyzerException.MoodException.NO_SUCH_FIELD,e.type);
+        }
+    }
+
+    @Test
+    public void givenNullField_WhenImProper_ShouldReturnHappy() {
+        try{
+            MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createMoodAnalyzer("I Am In Happy Mood");
+            String message1 = MoodAnalyzerFactory.getField(moodAnalyzer,"message",null);
+        }catch(MoodAnalyzerException e)
+        {
+            Assert.assertEquals(MoodAnalyzerException.MoodException.INVOCATION_ERROR,e.type);
         }
     }
 }
